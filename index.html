@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Cafe Menu</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDN8fGNvZmZlZXxlbnwwfHx8fDE2NzQ0MDQ0NDY&ixlib=rb-1.2.1&q=80&w=1080') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar .logo {
+            height: 40px;
+            width: auto;
+        }
+        .navbar .hamburger {
+            font-size: 1.5em;
+            color: #333;
+            cursor: pointer;
+        }
+        /* Main Content Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 80px;
+            width: 100%;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1000px;
+        }
+        .filter-section input[type="radio"] {
+            display: none;
+        }
+        .filter-section label {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1.2em;
+            color: #333;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        /* Keep radio button color unchanged when clicked */
+        .filter-section input[type="radio"]:checked + label {
+            background-color: #f5f5f5;
+            border-color: #ddd;
+            color: #333;
+            font-weight: normal;
+        }
+        /* Carousel Styling */
+        /* Carousel Styling */
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px 0;
+}
+
+/* Inner container for the carousel items */
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+/* Carousel Item */
+.carousel-item {
+    position: absolute; /* Absolute position to stack all items */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.5s ease; /* Smooth transition for opacity */
+    width: 100%; /* Full width */
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Show the first carousel item by default */
+#carousel-1:checked ~ .carousel-inner .carousel-item:nth-child(1) {
+    opacity: 1;
+    position: relative;
+}
+
+/* Show the second carousel item when the corresponding radio button is checked */
+#carousel-2:checked ~ .carousel-inner .carousel-item:nth-child(2) {
+    opacity: 1;
+    position: relative;
+}
+
+/* Show the third carousel item when the corresponding radio button is checked */
+#carousel-3:checked ~ .carousel-inner .carousel-item:nth-child(3) {
+    opacity: 1;
+    position: relative;
+}
+
+/* Radio Buttons for Carousel */
+.carousel-radio {
+    display: none;
+}
+
+/* Slide Indicators */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.carousel-dots label {
+    background-color: #ddd;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Highlight the active dot */
+#carousel-1:checked ~ .carousel-dots label:nth-child(1),
+#carousel-2:checked ~ .carousel-dots label:nth-child(2),
+#carousel-3:checked ~ .carousel-dots label:nth-child(3) {
+    background-color: #ff6347;
+}
+
+/* Hot Deal Icon */
+.hot-deal-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #ff6347;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1.2em;
+}
+
+        /* Menu Styling */
+        .menu-container {
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1000px;
+            background-color: #fff;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .menu-section {
+            margin-bottom: 30px;
+        }
+        .menu-section h2 {
+            font-size: 1.8em;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        .item-name {
+            font-size: 1.2em;
+            color: #333;
+        }
+        .price {
+            font-size: 1.2em;
+            color: #ff6347;
+            margin-top: 5px;
+        }
+        .description {
+            display: none;
+            font-size: 1em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .menu-item:hover .description {
+            display: block;
+        }
+        /* WhatsApp button styling */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            text-align: center;
+            padding: 15px;
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.3em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+        .whatsapp-button:hover {
+            background-color: #20b958;
+            transform: scale(1.05);
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .menu-section h2 {
+                font-size: 1.5em;
+            }
+            .item-name, .price {
+                font-size: 1em;
+            }
+            .whatsapp-button {
+                font-size: 1.2em;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            .menu-section h2 {
+                font-size: 1.2em;
+            }
+            .item-name, .price {
+                font-size: 0.9em;
+            }
+            .whatsapp-button {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><img src="hotellogo.PNG" alt="Hotel Logo" class="logo"></div>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <input type="radio" id="filter-small-eats" name="filter" checked>
+            <label for="filter-small-eats"><a href="#small-eats">Small Eats</a></label>
+            
+            <input type="radio" id="filter-wraps" name="filter">
+            <label for="filter-wraps"><a href="#wraps">Wraps</a></label>
+
+            <input type="radio" id="filter-sandwiches" name="filter">
+            <label for="filter-sandwiches"><a href="#sandwiches">Sandwiches</a></label>
+
+            <input type="radio" id="filter-burgers" name="filter">
+            <label for="filter-burgers"><a href="#burgers">Burgers and Sliders</a></label>
+
+            <input type="radio" id="filter-calzone-pizza" name="filter">
+            <label for="filter-calzone-pizza"><a href="#calzone-pizza">Calzone & Pizza</a></label>
+
+            <input type="radio" id="filter-coffee" name="filter">
+            <label for="filter-coffee"><a href="#coffee">Coffee & Beverages</a></label>
+        </div>
+
+        <!-- Hot Items Carousel -->
+        <div class="carousel">
+            <input type="radio" name="carousel" id="carousel-1" checked>
+            <input type="radio" name="carousel" id="carousel-2">
+            <input type="radio" name="carousel" id="carousel-3">
+            <!-- Carousel Inner -->
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <div class="hot-deal-icon"><i class="fas fa-fire"></i> Hot Deal</div>
+                    <h3>French Fries - Plain/Peri Peri</h3>
+                    <p class="price">₹175/195</p>
+                </div>
+                <div class="carousel-item">
+                    <div class="hot-deal-icon"><i class="fas fa-fire"></i> Hot Deal</div>
+                    <h3>Chicken Shawarma Wrap</h3>
+                    <p class="price">₹450</p>
+                </div>
+                <div class="carousel-item">
+                    <div class="hot-deal-icon"><i class="fas fa-fire"></i> Hot Deal</div>
+                    <h3>Margherita Pizza</h3>
+                    <p class="price">₹700</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Container -->
+        <div class="menu-container">
+            <h1>Le Cafe Menu</h1>
+
+            <!-- Menu Sections -->
+            <div class="menu-section" id="small-eats">
+                <h2>Small Eats</h2>
+                <div class="menu-item">
+                    <p class="item-name">French Fries - Plain/Peri Peri</p>
+                    <p class="price">₹ 175/195</p>
+                    <div class="description">Crispy fries served plain or with a spicy peri peri seasoning.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Garlic Cheese Fries</p>
+                    <p class="price">₹ 255</p>
+                    <div class="description">Fries topped with garlic and melted cheese.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Potato Wedges - Plain/Peri Peri</p>
+                    <p class="price">₹ 215/₹ 235</p>
+                    <div class="description">Crunchy potato wedges served plain or with peri peri seasoning.</div>
+                </div>
+            </div>
+
+            <div class="menu-section" id="wraps">
+                <h2>Wraps</h2>
+                <div class="menu-item">
+                    <p class="item-name">Chicken Shawarma Wrap</p>
+                    <p class="price">₹ 450</p>
+                    <div class="description">Delicious chicken shawarma wrapped in a warm pita with fresh vegetables and sauces.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Falafel Wrap</p>
+                    <p class="price">₹ 400</p>
+                    <div class="description">Crispy falafel with veggies and tahini sauce wrapped in pita.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Veggie Wrap</p>
+                    <p class="price">₹ 350</p>
+                    <div class="description">A fresh and healthy veggie wrap with a mix of seasonal vegetables.</div>
+                </div>
+            </div>
+
+            <div class="menu-section" id="sandwiches">
+                <h2>Sandwiches</h2>
+                <div class="menu-item">
+                    <p class="item-name">Chicken Club Sandwich</p>
+                    <p class="price">₹500</p>
+                    <div class="description">A classic chicken club with bacon, lettuce, and tomato.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Veggie Delight Sandwich</p>
+                    <p class="price">₹450</p>
+                    <div class="description">A tasty sandwich with a variety of fresh vegetables and cheese.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Grilled Cheese Sandwich</p>
+                    <p class="price">₹400</p>
+                    <div class="description">Classic grilled cheese sandwich served with a side of pickles.</div>
+                </div>
+            </div>
+
+            <div class="menu-section" id="burgers">
+                <h2>Burgers and Sliders</h2>
+                <div class="menu-item">
+                    <p class="item-name">Beef Burger</p>
+                    <p class="price">₹600</p>
+                    <div class="description">Juicy beef patty with cheese, lettuce, tomato, and special sauce.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Chicken Slider</p>
+                    <p class="price">₹350</p>
+                    <div class="description">Tender chicken patty served in a slider bun with fresh toppings.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Veggie Burger</p>
+                    <p class="price">₹550</p>
+                    <div class="description">A flavorful veggie patty with all the classic burger toppings.</div>
+                </div>
+            </div>
+
+            <div class="menu-section" id="calzone-pizza">
+                <h2>Calzone & Pizza</h2>
+                <div class="menu-item">
+                    <p class="item-name">Margherita Pizza</p>
+                    <p class="price">₹700</p>
+                    <div class="description">Classic margherita pizza with fresh tomatoes, mozzarella, and basil.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Pepperoni Calzone</p>
+                    <p class="price">₹750</p>
+                    <div class="description">Delicious calzone stuffed with pepperoni, cheese, and marinara sauce.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Vegetarian Pizza</p>
+                    <p class="price">₹720</p>
+                    <div class="description">A delightful vegetarian pizza with a variety of fresh vegetables.</div>
+                </div>
+            </div>
+
+            <div class="menu-section" id="coffee">
+                <h2>Coffee & Beverages</h2>
+                <div class="menu-item">
+                    <p class="item-name">Espresso</p>
+                    <p class="price">₹150</p>
+                    <div class="description">A strong and bold espresso shot.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Cappuccino</p>
+                    <p class="price">₹200</p>
+                    <div class="description">Creamy cappuccino with a frothy top.</div>
+                </div>
+                <div class="menu-item">
+                    <p class="item-name">Iced Latte</p>
+                    <p class="price">₹220</p>
+                    <div class="description">Refreshing iced latte with a hint of vanilla.</div>
+                </div>
+            </div>
+
+            <!-- WhatsApp Button -->
+            <a href="https://wa.me/1234567890" class="whatsapp-button" target="_blank">
+                <i class="fab fa-whatsapp"></i> Order on WhatsApp
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
